@@ -1,0 +1,15 @@
+listening-port=3478
+fingerprint
+use-auth-secret=0
+lt-cred-mech
+user=repchat:CHANGE_ME
+realm=forgebase.ee
+server-name=turn.forgebase.ee
+listening-ip=0.0.0.0
+external-ip=YOUR_PUBLIC_IP_HERE
+min-port=49160
+max-port=49200
+no-cli
+no-tlsv1
+no-tlsv1_1
+simple-log

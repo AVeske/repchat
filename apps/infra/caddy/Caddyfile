@@ -1,0 +1,15 @@
+{
+	email you@forgebase.ee
+}
+
+chat.forgebase.ee {
+	root * /srv/frontend
+	file_server
+
+	# Single Page Application fallback for React Router
+	try_files {path} /index.html
+}
+
+chat-api.forgebase.ee {
+	reverse_proxy backend:3000
+}

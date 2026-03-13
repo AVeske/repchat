@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: repchat_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: repchat
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: repchatdb
+    volumes:
+      - repchat_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U repchat -d repchatdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build:
+      context: ./apps/backend_logic
+    container_name: repchat_backend
+    restart: unless-stopped
+    env_file:
+      - ./apps/backend_logic/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "3000"
+
+  coturn:
+    image: coturn/coturn:latest
+    container_name: repchat_coturn
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./infra/coturn/turnserver.conf:/etc/coturn/turnserver.conf:ro
+    command: ["-c", "/etc/coturn/turnserver.conf"]
+
+  caddy:
+    image: caddy:2
+    container_name: repchat_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./apps/frontend/dist:/srv/frontend:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  repchat_pgdata:
+  caddy_data:
+  caddy_config:
