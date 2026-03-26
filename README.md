@@ -158,7 +158,7 @@ Use provided script or manual seeding instructions in docs.
 
 See:
 
-➡ docs/DEPLOYMENT.md
+➡ [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
 Includes:
 
@@ -173,7 +173,7 @@ Includes:
 
 See:
 
-➡ docs/API.md
+➡ [docs/API.md](docs/API.md)
 
 ---
 
@@ -181,7 +181,7 @@ See:
 
 See:
 
-➡ docs/ARCHITECTURE.md
+➡ [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
 ---
 
